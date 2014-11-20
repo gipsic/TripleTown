@@ -1,15 +1,9 @@
 package ui;
 
-import java.awt.AlphaComposite;
-import java.awt.Composite;
-import java.awt.CompositeContext;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 
 import javax.swing.JPanel;
 
@@ -22,8 +16,10 @@ public class SplashScreen extends JPanel {
 	protected int opa = 0;
 	protected int rotate = 0;
 	protected int count = 0;
+	protected int fadeSpeed = 4;
 	protected boolean rotateCCW = false;
 	protected boolean finished = false;
+	
 	
 	public SplashScreen(){
 		setDoubleBuffered(true);
@@ -41,7 +37,8 @@ public class SplashScreen extends JPanel {
 			this.rotate = 0;
 			this.opa = 0;
 		} else if(count < 48){
-			this.opa += 5;
+			if(this.opa+fadeSpeed<=100)
+				this.opa += fadeSpeed;
 			this.rotate = 0;
 		} else if(count < 108){
 			if(this.rotateCCW){
@@ -56,8 +53,8 @@ public class SplashScreen extends JPanel {
 				}
 			}
 		} else if(count < 140) {
-			if(this.opa>0)
-				this.opa -= 5;
+			if(this.opa-fadeSpeed>=0)
+				this.opa -= fadeSpeed;
 			this.rotate = 0;
 		} else {
 			finished = true;

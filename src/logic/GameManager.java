@@ -1,8 +1,7 @@
 package logic;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import ui.GameLobby;
 import ui.GameScreen;
