@@ -58,16 +58,16 @@ public class GameLobby extends JPanel {
 		buttonScore = DrawingUtility.getImage("res/LobbyScreen/button-score.png");
 		if(InputUtility.getMouseX() >= 265  && InputUtility.getMouseX() <= 375 &&
 		   InputUtility.getMouseY() >= 405 && InputUtility.getMouseY() <= 437	)
-			buttonScore = buttonScore.getSubimage(0, 0, 120, 42);
-		else
 			buttonScore = buttonScore.getSubimage(0, 42, 120, 42);
+		else
+			buttonScore = buttonScore.getSubimage(0, 0, 120, 42);
 		
 		buttonPlay = DrawingUtility.getImage("res/LobbyScreen/button-play.png");
 		if(InputUtility.getMouseX() >= 220  && InputUtility.getMouseX() <= 420 &&
 		   InputUtility.getMouseY() >= 330 && InputUtility.getMouseY() <= 380	)
-			buttonPlay = buttonPlay.getSubimage(0, 0, 210, 60);
-		else
 			buttonPlay = buttonPlay.getSubimage(0, 60, 210, 60);
+		else
+			buttonPlay = buttonPlay.getSubimage(0, 0, 210, 60);
 	}
 	
 	@Override
