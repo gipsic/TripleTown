@@ -14,6 +14,7 @@ public class GameLobby extends JPanel {
 	
 	protected static final BufferedImage sky = DrawingUtility.getImage("res/LobbyScreen/Sky.png");
 	protected static final BufferedImage globe = DrawingUtility.getImage("res/LobbyScreen/Globe.png");
+	public static final BufferedImage preview = DrawingUtility.getImage("res/LobbyScreen/--Preview.png");
 	protected static final BufferedImage bear = DrawingUtility.getImage("res/LobbyScreen/Bear.png");
 	protected static final BufferedImage title = DrawingUtility.getImage("res/LobbyScreen/Title.png");
 	protected static BufferedImage buttonHelp = DrawingUtility.getImage("res/LobbyScreen/button-help.png").getSubimage(0, 40, 70, 40);
