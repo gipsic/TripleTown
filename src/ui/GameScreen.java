@@ -15,24 +15,23 @@ public class GameScreen extends JPanel {
 	private JPanel optionPanel;
 	private JPanel mapPanel;
 	private JButton HighScore, Homebutton, enableSoundButon;
-	private MapUtility mapUtil;
+//	private MapUtility mapUtil;
 	
 	public GameScreen(){
 		applyResize();
 		setDoubleBuffered(true);
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(Configuration.screenWidth,Configuration.screenHeight));
-		}
+	}
 	
-	public void update(MapUtility mapUtil) {
-		this.mapUtil = mapUtil;
+	public void update() {
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
 		DrawingUtility.drawGameScreen(g2);
-		DrawingUtility.drawMap(g2, mapUtil);
+		DrawingUtility.drawMap(g2);
 	}
 	
 	protected void applyResize(){

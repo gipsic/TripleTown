@@ -3,6 +3,7 @@ package logic;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import ui.AudioUtility;
 import ui.GameLobby;
 import ui.GameScreen;
 import ui.GameWindow;
@@ -75,13 +76,20 @@ public class GameManager {
 					game.setCurrentScene(gameScreen);
 					game.add(game.getCurrentScene());
 					game.pack();
-					gameScreen.update(gameLogic.getMapUtil());
+//					gameScreen.update(gameLogic.getMapUtil());
+					gameScreen.update();
+//					Thread introSound = new Thread(new AudioUtility());
+//					introSound.start();
+//					introSound.run();
+//					AudioUtility.playIntroSound();
+//					AudioUtility.
 					game.getCurrentScene().repaint();
 				}
 				
 			}
 			else if (game.getCurrentScene() instanceof GameScreen){
-				gameScreen.update(gameLogic.getMapUtil());
+//				gameScreen.update(gameLogic.getMapUtil());
+				gameScreen.update();
 				gameScreen.repaint();
 			}
 //			game.getCurrentScene().repaint();

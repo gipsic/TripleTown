@@ -9,59 +9,63 @@ import ui.DrawingUtility;
 
 public class MapUtility{
 
-	private int[][] map = new int[6][6];
-	private int size = 70; //px
-	private boolean canPut = false;
+	private static int[][] map = new int[6][6];
+	private static int size = 70; //px
+	private static boolean canPut = false;
 	
-	public MapUtility(){
-	}
+//	public MapUtility(){
+//	}
+//	
+//	public MapUtility(int size){
+//		this.size = size;
+//	}
 	
-	public MapUtility(int size){
-		this.size = size;
-	}
+//	public void copyMap(MapUtility map){
+//		for(int i=0;i<6;i++){
+//			for(int j=0;j<6;j++){
+//				this.map[i][j]=map.map[i][j];
+//			}
+//		}
+//	}
 	
-	public void copyMap(MapUtility map){
+	public static void clearMap(){
 		for(int i=0;i<6;i++){
 			for(int j=0;j<6;j++){
-				this.map[i][j]=map.map[i][j];
-			}
-		}
-	}
-	
-	public void clearMap(){
-		for(int i=0;i<6;i++){
-			for(int j=0;j<6;j++){
-				this.map[i][j]=0;
+				MapUtility.map[i][j]=0;
 			}
 		}
 	}
 	
 	//-----getter mothods -----
-	public int[][] getMap(){
-		return map;
+	public static int[][] getMap(){
+		return MapUtility.map;
 	}
 	
-	public int getMapAt(int x,int y){
-		return map[x][y];
+	public static int getMapAt(int x,int y){
+		return MapUtility.map[x][y];
 	}
 	
-	public int getSize(){
-		return size;
+	public static int getSize(){
+		return MapUtility.size;
 	}
 	
-	public boolean isCanPut(){
-		return canPut;
+	public static boolean isCanPut(){
+		return MapUtility.canPut;
 	}
 	//-----setter methods -----
-	public void setMap(int[][] map){
-		this.map = map;
+	public static void setMap(int[][] map){
+		MapUtility.map = map;
 	}
 	
-	public void setMapAt(int item, int x, int y){
-		this.map[x][y] = item;
+	public static void setMapAt(int item, int x, int y){
+		MapUtility.map[x][y] = item;
 	}
 	
-	public void setCanPut(boolean canPut){
-		this.canPut = canPut;		
+	public static void setCanPut(boolean canPut){
+		MapUtility.canPut = canPut;		
+	}
+	
+	public static void setSize(int size){
+		MapUtility.size = size;
 	}
 }

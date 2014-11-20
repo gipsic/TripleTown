@@ -63,9 +63,9 @@ public class DrawingUtility {
 		
 	}
 	
-	public static void drawMap(Graphics2D g2, MapUtility mapUtil){
-		int[][] map = mapUtil.getMap();
-		int size = mapUtil.getSize();
+	public static void drawMap(Graphics2D g2){
+		int[][] map = MapUtility.getMap();
+		int size = MapUtility.getSize();
 		for(int i=0;i<map.length;i++){
 			for(int j=0;j<map[0].length;j++){
 				g2.drawRect(i*size+20, j*size+20, size, size);
