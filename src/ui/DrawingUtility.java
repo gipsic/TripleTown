@@ -48,10 +48,11 @@ public class DrawingUtility {
 			BufferedImage buttonPlay,BufferedImage buttonScore,BufferedImage buttonSound){
 		g2.drawImage(sky, 0, 0, null);
 		g2.drawImage(globe, -96, 120, null);
+		g2.drawImage(GameLobby.preview, 0, 0, null);
 		g2.drawImage(title, 120, 25, null);
 		g2.drawImage(buttonHelp, 20, 420, null);
 		g2.drawImage(buttonSound, 580, 420, null);
-		g2.drawImage(buttonScore, 260, 400, null);
+		g2.drawImage(buttonScore, 260, 403, null);
 		g2.drawImage(buttonPlay, 215, 325, null);
 	}
 	

@@ -18,7 +18,7 @@ public class SplashScreen extends JPanel {
 	protected int count = 0;
 	protected int fadeSpeed = 4;
 	protected boolean rotateCCW = false;
-	protected boolean finished = false;
+	protected boolean finished = true;
 	
 	
 	public SplashScreen(){
