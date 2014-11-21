@@ -33,6 +33,7 @@ public class GameWindow extends JFrame{
 		this.getContentPane().setPreferredSize(new Dimension(Configuration.screenWidth,Configuration.screenHeight));
 	}
 	
+	
 	public void switchScene(JPanel scene){
 		getContentPane().remove(currentScene);
 		this.currentScene = scene;

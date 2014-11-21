@@ -93,6 +93,7 @@ public class GameManager {
 					game.getCurrentScene().repaint();
 				}
 				
+				
 			}
 			else if (game.getCurrentScene() instanceof GameScreen){
 //				gameScreen.update(gameLogic.getMapUtil());
