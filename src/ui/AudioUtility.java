@@ -3,6 +3,8 @@ package ui;
 import java.applet.Applet;
 import java.applet.AudioClip;
 
+import javax.sound.sampled.FloatControl;
+
 import logic.MainLogic;
 import logic.PlayerStatus;
 
