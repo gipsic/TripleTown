@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import ui.AudioUtility;
+import ui.DrawingUtility;
 import ui.GameLobby;
 import ui.GameScreen;
 import ui.GameWindow;
@@ -40,7 +41,7 @@ public class GameManager {
 		game.setVisible(true);
 		// TODO Auto-generated constructor stub
 		boolean temp=true;
-		Thread introSound = new Thread(new AudioUtility());
+		Thread introSound = new Thread(new AudioUtility(gameLogic));
 		while(true){
 			try {
 				Thread.sleep(20);
@@ -64,8 +65,7 @@ public class GameManager {
 					if(temp){
 						introSound.start();
 						temp=false;
-					}
-					
+					}					
 				}
 			}
 			else if (game.getCurrentScene() instanceof GameLobby){
@@ -76,6 +76,7 @@ public class GameManager {
 				   InputUtility.isMouseLeftClicked()){
 					gameLogic.getPlayer().setEnableSound(!gameLogic.getPlayer().isEnableSound());
 				}
+				
 				if(InputUtility.getMouseX() >= 220  && InputUtility.getMouseX() <= 420 &&
 				   InputUtility.getMouseY() >= 330 && InputUtility.getMouseY() <= 380 &&
 				   InputUtility.isMouseLeftClicked()){
