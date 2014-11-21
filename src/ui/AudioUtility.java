@@ -14,6 +14,7 @@ public class AudioUtility implements Runnable{
 	
 	public static void playIntroSound(){
 		intro.loop();
+		
 	}
 
 	@Override

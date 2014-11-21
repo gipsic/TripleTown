@@ -65,6 +65,7 @@ public class GameManager {
 						introSound.start();
 						temp=false;
 					}
+					
 				}
 			}
 			else if (game.getCurrentScene() instanceof GameLobby){

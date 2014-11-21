@@ -31,7 +31,6 @@ public class GameWindow extends JFrame{
 		this.setFocusable(true);
 //		this.setUndecorated(true);
 		this.getContentPane().setPreferredSize(new Dimension(Configuration.screenWidth,Configuration.screenHeight));
-		
 	}
 	
 	public void switchScene(JPanel scene){
