@@ -39,7 +39,8 @@ public class GameManager {
 		*/
 		game.setVisible(true);
 		// TODO Auto-generated constructor stub
-		
+		boolean temp=true;
+		Thread introSound = new Thread(new AudioUtility());
 		while(true){
 			try {
 				Thread.sleep(20);
@@ -51,13 +52,19 @@ public class GameManager {
 				splashScreen.update();
 				splashScreen.repaint();
 				if(splashScreen.isFinished()){
-					game.remove(splashScreen);
-					game.validate();
-					game.setCurrentScene(gameLobby);
-					game.add(game.getCurrentScene());
-					game.pack();
+					game.switchScene(gameLobby);
+//					game.remove(splashScreen);
+////				game.getContentPane().removeAll();
+//					game.validate();
+//					game.setCurrentScene(gameLobby);
+//					game.add(game.getCurrentScene());
+//					game.pack();
 					gameLobby.update(gameLogic);
 					game.getCurrentScene().repaint();
+					if(temp){
+						introSound.start();
+						temp=false;
+					}
 				}
 			}
 			else if (game.getCurrentScene() instanceof GameLobby){
@@ -71,15 +78,14 @@ public class GameManager {
 				if(InputUtility.getMouseX() >= 220  && InputUtility.getMouseX() <= 420 &&
 				   InputUtility.getMouseY() >= 330 && InputUtility.getMouseY() <= 380 &&
 				   InputUtility.isMouseLeftClicked()){
-					game.remove(gameLobby);
-					game.validate();
-					game.setCurrentScene(gameScreen);
-					game.add(game.getCurrentScene());
-					game.pack();
+					game.switchScene(gameScreen);
+//					game.remove(gameLobby);
+//					game.validate();
+//					game.setCurrentScene(gameScreen);
+//					game.add(game.getCurrentScene());
+//					game.pack();
 //					gameScreen.update(gameLogic.getMapUtil());
 					gameScreen.update();
-//					Thread introSound = new Thread(new AudioUtility());
-//					introSound.start();
 //					introSound.run();
 //					AudioUtility.playIntroSound();
 //					AudioUtility.

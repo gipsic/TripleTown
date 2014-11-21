@@ -34,6 +34,14 @@ public class GameWindow extends JFrame{
 		
 	}
 	
+	public void switchScene(JPanel scene){
+		getContentPane().remove(currentScene);
+		this.currentScene = scene;
+		getContentPane().add(currentScene);
+		getContentPane().validate();
+		pack();
+		currentScene.requestFocus();
+	}
 
 	private void addListener(){
 		

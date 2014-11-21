@@ -9,17 +9,18 @@ public class AudioUtility implements Runnable{
 	private static AudioClip intro;
 	static{
 		ClassLoader loader = AudioUtility.class.getClassLoader();
-		intro = Applet.newAudioClip(loader.getResource("res/intro.mp3"));
+		intro = Applet.newAudioClip(loader.getResource("res/intro.wav"));
 	}
 	
 	public static void playIntroSound(){
-		intro.play();
+		intro.loop();
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		intro.play();		
+		
+		intro.loop();		
 	}
 	
 //	public static void playSound(String identifier){
