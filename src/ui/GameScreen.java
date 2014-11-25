@@ -48,7 +48,8 @@ public class GameScreen extends JPanel {
 			buttonSoundY = 40;
 		
 		buttonSoundX = (gameLogic.getPlayer().isEnableSound()) ? 0 : 40;
-				
+		
+		
 	}
 	
 	@Override

@@ -11,7 +11,8 @@ import ui.DrawingUtility;
 public class TownMap{
 
 	private int[][] map;
-	private BufferedImage[] Ground = new BufferedImage[19];
+	private BufferedImage[] Ground = new BufferedImage[40];
+	private String[] GroundLogic = new String[40];
 	private boolean canPut = false;
 	
 	public TownMap(int[][] map){
@@ -38,45 +39,12 @@ public class TownMap{
 		if(!isCanPutAt(x,y)) return null;
 		else {
 			String around = aroundCell(x,y);
-			if(logicCompare(around,"00X111X0")){
-				file = 1;
-			} else if(logicCompare(around,"X0X11111")){
-				file = 2;
-			} else if(logicCompare(around,"X000X111")){
-				file = 3;
-			} else if(logicCompare(around,"X11111X0")){
-				file = 4;
-			} else if(logicCompare(around,"11111111")){
-				file = 5;
-			} else if(logicCompare(around,"11X0X111")){
-				file = 6;
-			} else if(logicCompare(around,"X111X000")){
-				file = 7;
-			} else if(logicCompare(around,"1111X0X1")){
-				file = 8;
-			} else if(logicCompare(around,"11X000X1")){
-				file = 9;
-			} else if(logicCompare(around,"00X101X0")){
-				file = 10;
-			} else if(logicCompare(around,"X000X101")){
-				file = 11;
-			} else if(logicCompare(around,"X101X000")){
-				file = 12;
-			} else if(logicCompare(around,"01X000X1")){
-				file = 13;
-			} else if(logicCompare(around,"00X1X000")){
-				file = 14;
-			} else if(logicCompare(around,"X00000X1")){
-				file = 15;
-			} else if(logicCompare(around,"0000X1X0")){
-				file = 16;
-			} else if(logicCompare(around,"X1X00000")){
-				file = 17;
-			} else if(logicCompare(around,"00000000")){
-				file = 18;
-			} else if(logicCompare(around,"01010101")){
-				file = 19;
-			} else file = 18;
+			for(int a = 1;a<=Ground.length;a++){
+				if(logicCompare(around,GroundLogic[a-1])){
+					file = a;
+					break;
+				}
+			}
 		}
 		
 		return Ground[file-1];
@@ -108,11 +76,44 @@ public class TownMap{
 	}
 	
 	public void loadGround(){
-		for(int i =1; i<=19;i++){
+		for(int i =1; i<=33;i++){
 			String a = "";
 			if(i<10) a = "0";
 			Ground[i-1] = DrawingUtility.getImage("res/GameScreen/ground-"+a+i+".png");
 		}
+		GroundLogic[0] = "X0X111X0";
+		GroundLogic[1] = "X0X11111";
+		GroundLogic[2] = "X0X0X111";
+		GroundLogic[3] = "X11111X0";
+		GroundLogic[4] = "11111111";
+		GroundLogic[5] = "11X0X111";
+		GroundLogic[6] = "X111X0X0";
+		GroundLogic[7] = "1111X0X1";
+		GroundLogic[8] = "11X000X1";
+		GroundLogic[9] = "00X101X0";
+		GroundLogic[10] = "X000X101";
+		GroundLogic[11] = "X101X0X0";
+		GroundLogic[12] = "01X000X1";
+		GroundLogic[13] = "X0X1X0X0";
+		GroundLogic[14] = "X0X0X0X1";
+		GroundLogic[15] = "X0X0X1X0";
+		GroundLogic[16] = "X1X0X0X0";
+		GroundLogic[17] = "00000000";
+		GroundLogic[18] = "01010101";
+		GroundLogic[19] = "01111111";
+		GroundLogic[20] = "11011111";
+		GroundLogic[21] = "11110111";
+		GroundLogic[22] = "11111101";
+		GroundLogic[23] = "X11101X0";
+		GroundLogic[24] = "X0X10111";
+		GroundLogic[25] = "11X0X101";
+		GroundLogic[26] = "X0X11101";
+		GroundLogic[27] = "1101X0X1";
+		GroundLogic[28] = "X10111X0";
+		GroundLogic[29] = "0111X0X1";
+		GroundLogic[30] = "01X0X111";
+		GroundLogic[31] = "X1X0X1X0";
+		GroundLogic[32] = "X0X1X0X1";
 	}
 	
 	//-----getter mothods -----

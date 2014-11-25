@@ -21,6 +21,8 @@ public class DrawingUtility {
 	protected static AlphaComposite opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
 	protected static AffineTransform tranform;
 	protected static AffineTransformOp	tranformOp;
+	
+	protected static BufferedImage Items = DrawingUtility.getImage("res/GameScreen/Items.png");
 
 		
 	public static BufferedImage getImage(String directory){
@@ -77,6 +79,12 @@ public class DrawingUtility {
 				if(ground != null) g2.drawImage(ground, x, y, null);
 			}
 		}
+		for(int x = 10, i = 0; i < 6 ; i++, x += 70){
+			for(int y = 50,j = 0; j < 6 ; j++, y += 70){
+				if(map.getMapAt(i, j) != 0)
+					drawItems(g2, x,y,map.getMapAt(i, j), 0);
+			}
+		}
 		
 		
 		BufferedImage panel = DrawingUtility.getImage("res/GameScreen/panel-score.png");
@@ -128,6 +136,18 @@ public class DrawingUtility {
 		g2.drawImage(buttonHelp, 510, 420, null);
 		g2.drawImage(buttonSound, 580, 420, null);
 		g2.drawImage(buttonHome, 470, 420, null);
+	}
+	
+	public static void drawItems(Graphics2D g2, int x,int y,int code, int state){
+		int subX, subY, w = 70, h = 70;
+		if(state == 0){
+			h = 105;
+			if(code > 7){ subY = 140; code -=7; }
+			else subY = 0;
+			subX = (code-1)*70;
+			BufferedImage item = Items.getSubimage(subX, subY, w, h);
+			g2.drawImage(item, x, y-35, null);
+		}
 	}
 
 

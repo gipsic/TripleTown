@@ -89,7 +89,7 @@ public class GameManager {
 				gameScreen.update();
 				gameScreen.repaint();
 
-				if(InputUtility.isMouseLeftClicked()) {
+				if(InputUtility.isMouseLeftClicked() && !gameLogic.getPlayer().isPause()) {
 					if (mouseX >= 585 && mouseX <= 615 && mouseY >= 425 && mouseY <= 455) {
 						//Click Sound Button
 						gameLogic.getPlayer().setEnableSound(!gameLogic.getPlayer().isEnableSound());
