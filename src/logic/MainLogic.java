@@ -4,15 +4,16 @@ import java.awt.event.KeyEvent;
 
 import ui.InputUtility;
 
-public class MainLogic implements IGameLogic {
+public class MainLogic implements ICombinable {
 
 	private PlayerStatus player;
-//	private MapUtility mapUtil = new MapUtility();
+	private TownMap currentMap = new TownMap();
 	private int[][] listForMerge = new int[40][2];
 	private int count = 0;
 	
 	public MainLogic(){
 		player = new PlayerStatus("");
+		currentMap.clearMap();
 	}
 	
 	public PlayerStatus getPlayer() {
@@ -23,12 +24,11 @@ public class MainLogic implements IGameLogic {
 		this.player = player;
 	}
 
-//	public MapUtility getMapUtil(){
-//		return mapUtil;
-//	}
+	public TownMap getMapUtil(){
+		return currentMap;
+	}
 	
 	public void logicUpdate(){
-		
 		
 		//Pause
 		if(InputUtility.getKeyTriggered(KeyEvent.VK_ENTER)){
@@ -42,14 +42,14 @@ public class MainLogic implements IGameLogic {
 		//Update put and merge
 		if(player.isDisplayArea(InputUtility.getMouseX(), InputUtility.getMouseY())){
 			if(InputUtility.isMouseLeftClicked()){
-				int x=(InputUtility.getMouseX()-25)/MapUtility.getSize();
-				int y=(InputUtility.getMouseY()-25)/MapUtility.getSize();
-				this.checkMerge(x, y, MapUtility.getMapAt(x, y));
+				int x=(InputUtility.getMouseX()-25)/70;
+				int y=(InputUtility.getMouseY()-25)/70;
+				this.checkMerge(x, y, currentMap.getMapAt(x, y));
 				if(count>=3){
 					this.Merge();
 				}
 				else{
-					this.ReverseMap(MapUtility.getMapAt(x, y));
+					this.ReverseMap(currentMap.getMapAt(x, y));
 				}
 			}
 		}
@@ -58,11 +58,11 @@ public class MainLogic implements IGameLogic {
 	
 	public void checkMerge(int x, int y, int check){
 		
-		if(MapUtility.getMapAt(x, y) != check){
+		if(currentMap.getMapAt(x, y) != check){
 			return;
 		}
 		else{
-			MapUtility.setMapAt(0, x, y);
+			currentMap.setMapAt(0, x, y);
 			listForMerge[count][0] = x;
 			listForMerge[count][1] = y;
 			count++;
@@ -85,7 +85,7 @@ public class MainLogic implements IGameLogic {
 	
 	public void ReverseMap(int set){
 		for(int i=0 ; i<listForMerge.length ; i++)
-			MapUtility.setMapAt(set, listForMerge[i][0], listForMerge[i][1]);
+			currentMap.setMapAt(set, listForMerge[i][0], listForMerge[i][1]);
 	}
 	
 }

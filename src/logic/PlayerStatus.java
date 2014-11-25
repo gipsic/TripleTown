@@ -21,6 +21,10 @@ public class PlayerStatus {
 		return score;
 	}
 	
+	public int getRank(){
+		return 7;
+	}
+	
 	public int getCurrentItem(){
 		return currentItem;
 	}
@@ -68,6 +72,6 @@ public class PlayerStatus {
 	 */
 	
 	public void render(Graphics2D g2){
-		DrawingUtility.drawStatusBar(g2, playerName, score, currentItem, pause, enableSound);
+		//DrawingUtility.drawStatusBar(g2, playerName, score, currentItem, pause, enableSound);
 	}
 }
