@@ -2,6 +2,7 @@ package logic;
 
 import java.awt.event.KeyEvent;
 
+import ui.ICombinable;
 import ui.InputUtility;
 
 public class MainLogic implements ICombinable {

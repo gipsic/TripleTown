@@ -136,6 +136,30 @@ public class HighScoreUtility {
 		JOptionPane.showMessageDialog(null, msg.trim(), "Top 10", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	public static int getScoreOf(int i) {
+		if(!loadHighScore() || highScoreRecord == null){
+			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
+			return 0;
+		}
+		int index = i-1;
+		if(index>=0 && index<=highScoreRecord.length) return highScoreRecord[i-1].score;
+		return 0;
+	}	
+
+	public static int calcRank(int score) {
+		if(!loadHighScore() || highScoreRecord == null){
+			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
+			return 0;
+		}
+		int i=0;
+		for(i=0; i<highScoreRecord.length; i++){
+			if(score > highScoreRecord[i].score){
+				break;
+			}
+		}
+		return i+1;
+	}	
+
 	private static boolean loadHighScore(){
 		File f = new File(readFileName);
 		//If no high score, create default
@@ -213,13 +237,4 @@ public class HighScoreUtility {
 		readFileName = name;
 	}
 
-	public static int getScoreOf(int i) {
-		if(!loadHighScore() || highScoreRecord == null){
-			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
-			return 0;
-		}
-		int index = i-1;
-		if(index>=0 && index<=highScoreRecord.length) return highScoreRecord[i-1].score;
-		return 0;
-	}	
 }

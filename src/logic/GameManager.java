@@ -26,7 +26,7 @@ public class GameManager {
 		GameLobby gameLobby = new GameLobby(gameLogic);
 		GameScreen gameScreen = new GameScreen(gameLogic);
 
-		game.setCurrentScene(gameScreen);
+		game.setCurrentScene(splashScreen);
 		game.add(game.getCurrentScene());
 		game.pack();
 		
@@ -99,6 +99,8 @@ public class GameManager {
 					} else if (mouseX >= 265 && mouseX <= 375 && mouseY >= 405 && mouseY <= 437) {
 						//Click Home
 						game.switchScene(gameLobby);
+						gameLobby.update();
+						gameLobby.repaint();
 					}
 				}
 			}

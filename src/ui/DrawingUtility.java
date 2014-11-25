@@ -101,8 +101,8 @@ public class DrawingUtility {
 		int padding = 0;
 		String text = "";
 		
-		int Rank = gameLogic.getPlayer().getRank();
 		int Score = gameLogic.getPlayer().getScore();
+		int Rank = HighScoreUtility.calcRank(Score);
 		
 		g2.setFont(new Font("Tahoma",Font.BOLD,36));
 		text = Score+"";

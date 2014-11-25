@@ -1,5 +1,5 @@
+import ui.ICombinable;
 import logic.GameManager;
-import logic.ICombinable;
 import logic.MainLogic;
 
 public class TripleTown  {

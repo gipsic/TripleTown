@@ -21,10 +21,6 @@ public class PlayerStatus {
 		return score;
 	}
 	
-	public int getRank(){
-		return 7;
-	}
-	
 	public int getCurrentItem(){
 		return currentItem;
 	}
