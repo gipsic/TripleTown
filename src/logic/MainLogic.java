@@ -2,15 +2,15 @@ package logic;
 
 import java.awt.event.KeyEvent;
 
-import ui.ICombinable;
-import ui.InputUtility;
+import utility.DrawingUtility;
+import utility.InputUtility;
 
-public class MainLogic implements ICombinable {
+public class MainLogic {
 
 	private PlayerStatus player;
 	private TownMap currentMap = new TownMap();
-	private int[][] listForMerge = new int[40][2];
-	private int count = 0;
+	private int[][] mergeList = new int[][]{{-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1}}; 
+	private int mergeCount = 0;
 	
 	public MainLogic(){
 		player = new PlayerStatus("");
@@ -19,6 +19,11 @@ public class MainLogic implements ICombinable {
 	public PlayerStatus getPlayer() {
 		return player;
 	}
+	
+	public void resetMergeList(){
+		mergeCount = 0;
+		mergeList = new int[][]{{-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1}}; 
+	}
 
 	public void setPlayer(PlayerStatus player) {
 		this.player = player;
@@ -26,6 +31,24 @@ public class MainLogic implements ICombinable {
 
 	public TownMap getMapUtil(){
 		return currentMap;
+	}
+	
+	public boolean isMapFull(){
+		int itemNum = 0;
+		for(int x = 0; x < 6 ;x ++){
+			for(int y = 0; y < 6 ;y ++){
+				if(currentMap.getMapAt(x, y) > 0 && currentMap.getStateAt(x, y) != 2)
+					itemNum++;
+			}
+		}
+		if(itemNum!=36) return false;
+		else return true;
+	}
+	
+	public void reset(){
+		player.setPause(false);
+		player.clearScore();
+		currentMap.clearMap();
 	}
 	
 	public void logicUpdate(){
@@ -40,52 +63,84 @@ public class MainLogic implements ICombinable {
 		}
 		
 		//Update put and merge
-		if(player.isDisplayArea(InputUtility.getMouseX(), InputUtility.getMouseY())){
-			if(InputUtility.isMouseLeftClicked()){
-				int x=(InputUtility.getMouseX()-25)/70;
-				int y=(InputUtility.getMouseY()-25)/70;
-				this.checkMerge(x, y, currentMap.getMapAt(x, y));
-				if(count>=3){
-					this.Merge();
+		currentMap.cleanMap();
+		int cellX = DrawingUtility.onXcell();
+		int cellY = DrawingUtility.onYcell();
+		int item = player.getCurrentItem();
+		if(cellX != -1 && cellY != -1){
+			if(!currentMap.isCanPutAt(cellX, cellY)) {
+				item = currentMap.getMapAt(cellX, cellY);
+				currentMap.setMapAt(item, 3, cellX, cellY);
+			} else if(InputUtility.isMouseLeftClicked()){
+				currentMap.setMapAt(item, 1, cellX, cellY);
+				player.increaseScore(currentMap.getItemScore(item));
+				
+				while(true){
+					int codeMerge = Merge(cellX, cellY, item);
+					if(codeMerge == -1) break;
+					currentMap.setMapAt(codeMerge, 1, cellX, cellY);
+					player.increaseScore(currentMap.getItemScore(codeMerge));
+					item = codeMerge;
 				}
-				else{
-					this.ReverseMap(currentMap.getMapAt(x, y));
-				}
+				
+			} else {
+				currentMap.setMapAt(item, 2, cellX, cellY);
 			}
 		}
 		
 	}
 	
-	public void checkMerge(int x, int y, int check){
-		
-		if(currentMap.getMapAt(x, y) != check){
-			return;
+	public void checkMerge(int x, int y, int check, int unCheck){
+		pushMergeList(x,y);
+		if(x<0 || x >5||y<0||y>5) return;
+		//Check Above Cell
+		if(currentMap.getMapAt(x, y+1)%7 == check && currentMap.getStateAt(x, y+1) != 2 && unCheck!=1){
+			pushMergeList(x,y+1);
+			checkMerge(x,y+1,check,3); // Don't check below cell (this)
 		}
-		else{
-			currentMap.setMapAt(0, x, y);
-			listForMerge[count][0] = x;
-			listForMerge[count][1] = y;
-			count++;
+		//Check Right Cell
+		if(currentMap.getMapAt(x+1, y)%7 == check && currentMap.getStateAt(x+1, y) != 2 && unCheck!=2){
+			pushMergeList(x+1,y);
+			checkMerge(x+1,y,check,4); // Don't check left cell (this)
+		}
+		//Check Below Cell
+		if(currentMap.getMapAt(x, y-1)%7 == check && currentMap.getStateAt(x, y-1) != 2 && unCheck!=3){
+			pushMergeList(x,y-1);
+			checkMerge(x,y-1,check,1); // Don't check left cell (this)
+		}
+		//Check Left Cell
+		if(currentMap.getMapAt(x-1, y)%7 == check && currentMap.getStateAt(x-1, y) != 2 && unCheck!=4){
+			pushMergeList(x-1,y);
+			checkMerge(x-1,y,check,2); // Don't check right cell (this)
 		}
 		
-		if(x-1>=0)
-			this.checkMerge(x-1, y, check);
-		if(y+1<6)
-			this.checkMerge(x, y+1, check);
-		if(x+1<6)
-			this.checkMerge(x+1, y, check);
-		if(y-1>=0)
-			this.checkMerge(x, y-1, check);
-		
+		//for(int a =0;a<5;a++)System.out.print("("+mergeList[a][0]+","+mergeList[a][1]+") ");System.out.println();
 	}
 	
-	public void Merge(){
-		//draw animation merge
+	public void pushMergeList(int x, int y){
+		for(int a =0;a<5;a++){
+			if(mergeList[a][0]==x && mergeList[a][1]==y)
+				return;
+		}
+		if(mergeCount<5){
+			mergeList[mergeCount][0] = x;
+			mergeList[mergeCount][1] = y;
+			mergeCount++;
+		}
 	}
 	
-	public void ReverseMap(int set){
-		for(int i=0 ; i<listForMerge.length ; i++)
-			currentMap.setMapAt(set, listForMerge[i][0], listForMerge[i][1]);
+	public int Merge(int x, int y, int code){
+		resetMergeList();
+		checkMerge(x, y, code,0);
+		if(mergeCount >= 3){
+			for(int a =0;a<5;a++){
+				currentMap.setMapAt(0, 0, mergeList[a][0], mergeList[a][1]);
+			}
+			if(mergeCount>3) code+=7;
+			return code+1;
+		}
+		return -1;
 	}
+	
 	
 }

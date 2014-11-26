@@ -6,14 +6,15 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import ui.DrawingUtility;
+import utility.DrawingUtility;
 
 public class TownMap{
 
 	private int[][] map;
-	private BufferedImage[] Ground = new BufferedImage[40];
-	private String[] GroundLogic = new String[40];
-	private boolean canPut = false;
+	private int[][] mapState = new int[6][6];
+	private int[] itemScore = new int[]{0,5,20,100,500,1500,5000,15000,50000,20,100,500,1500,5000,15000};
+	private BufferedImage[] Ground = new BufferedImage[47];
+	private String[] GroundLogic = new String[47];
 	
 	public TownMap(int[][] map){
 		this.map = map;
@@ -29,17 +30,31 @@ public class TownMap{
 		for(int i=0;i<6;i++){
 			for(int j=0;j<6;j++){
 				this.map[i][j]=0;
+				this.mapState[i][j]=0;
+			}
+		}
+	}
+	
+	public void cleanMap(){
+		for(int i=0;i<6;i++){
+			for(int j=0;j<6;j++){
+				if(this.mapState[i][j]==3) {
+					this.mapState[i][j] = 1;
+				} else if(this.mapState[i][j]==2) {
+					this.map[i][j]=0;
+					this.mapState[i][j] = 0;
+				}
 			}
 		}
 	}
 	
 	public BufferedImage calcBG(int x, int y){
 		BufferedImage ground;
-		int file = 18;
+		int file = 5;
 		if(!isCanPutAt(x,y)) return null;
 		else {
 			String around = aroundCell(x,y);
-			for(int a = 1;a<=Ground.length;a++){
+			for(int a = 1;a<=GroundLogic.length;a++){
 				if(logicCompare(around,GroundLogic[a-1])){
 					file = a;
 					break;
@@ -76,7 +91,7 @@ public class TownMap{
 	}
 	
 	public void loadGround(){
-		for(int i =1; i<=33;i++){
+		for(int i =1; i<=GroundLogic.length;i++){
 			String a = "";
 			if(i<10) a = "0";
 			Ground[i-1] = DrawingUtility.getImage("res/GameScreen/ground-"+a+i+".png");
@@ -89,16 +104,16 @@ public class TownMap{
 		GroundLogic[5] = "11X0X111";
 		GroundLogic[6] = "X111X0X0";
 		GroundLogic[7] = "1111X0X1";
-		GroundLogic[8] = "11X000X1";
-		GroundLogic[9] = "00X101X0";
-		GroundLogic[10] = "X000X101";
+		GroundLogic[8] = "11X0X0X1";
+		GroundLogic[9] = "X0X101X0";
+		GroundLogic[10] = "X0X0X101";
 		GroundLogic[11] = "X101X0X0";
-		GroundLogic[12] = "01X000X1";
+		GroundLogic[12] = "01X0X0X1";
 		GroundLogic[13] = "X0X1X0X0";
 		GroundLogic[14] = "X0X0X0X1";
 		GroundLogic[15] = "X0X0X1X0";
 		GroundLogic[16] = "X1X0X0X0";
-		GroundLogic[17] = "00000000";
+		GroundLogic[17] = "X0X0X0X0";
 		GroundLogic[18] = "01010101";
 		GroundLogic[19] = "01111111";
 		GroundLogic[20] = "11011111";
@@ -114,36 +129,73 @@ public class TownMap{
 		GroundLogic[30] = "01X0X111";
 		GroundLogic[31] = "X1X0X1X0";
 		GroundLogic[32] = "X0X1X0X1";
+		GroundLogic[33] = "X0X10101";
+		GroundLogic[34] = "01X0X101";
+		GroundLogic[35] = "X10101X0";
+		GroundLogic[36] = "0101X0X1";
+		GroundLogic[37] = "11110101";
+		GroundLogic[38] = "01111101";
+		GroundLogic[39] = "11010111";
+		GroundLogic[40] = "01011111";
+		GroundLogic[41] = "01110111";
+		GroundLogic[42] = "11011101";
+		GroundLogic[43] = "01010111";
+		GroundLogic[44] = "01011101";
+		GroundLogic[45] = "01110101";
+		GroundLogic[46] = "11010101";
 	}
 	
-	//-----getter mothods -----
 	public int[][] getMap(){
 		return this.map;
 	}
 	
 	public int getMapAt(int x,int y){
+		if(x<0 || x >5||y<0||y>5) return 0;
 		return this.map[x][y];
 	}
-
-	public boolean isCanPut(){
-		return this.canPut;
+	public int getStateAt(int x,int y){
+		if(x<0 || x >5||y<0||y>5) return 0;
+		return this.mapState[x][y];
 	}
 
 	public boolean isCanPutAt(int x,int y){
-		if(x<0 || x >5||y<0||y>5||map[x][y] != 0) return false;
+		if(x<0 || x >5||y<0||y>5||(map[x][y] != 0 && (mapState[x][y]==1 || mapState[x][y]==3))) return false;
 		else return true;
 	}
-//-----setter methods -----
+
 	public void setMap(int[][] map){
 		this.map = map;
 	}
-	
+
 	public void setMapAt(int item, int x, int y){
+		if(x<0 || x >5||y<0||y>5) return;
 		this.map[x][y] = item;
 	}
-	
-	public void setCanPut(boolean canPut){
-		this.canPut = canPut;		
+
+	public void setStateAt(int item, int x, int y){
+		if(x<0 || x >5||y<0||y>5) return;
+		this.mapState[x][y] = item;
+	}
+
+	public void setMapAt(int item, int state, int x, int y){
+		if(x<0 || x >5||y<0||y>5) return;
+		this.map[x][y] = item;
+		this.mapState[x][y] = state;
+	}
+	public void printMap(){
+		for(int i=0;i<6;i++){
+			for(int j=0;j<6;j++){
+				if(this.mapState[j][i]!=1)
+					System.out.print(this.map[j][i]+" ");
+				else
+					System.out.print(this.map[j][i]+"'");
+			}
+			System.out.println();
+		}
+	}
+	public int getItemScore(int code) {
+		if(code >= 0 && code < itemScore.length) return itemScore[code];
+		else return 0;
 	}
 	
 }

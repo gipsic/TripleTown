@@ -2,12 +2,19 @@ package ui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import logic.Configuration;
+import utility.DrawingUtility;
+import utility.InputUtility;
 
 public class GameWindow extends JFrame{
 
@@ -17,7 +24,7 @@ public class GameWindow extends JFrame{
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	public GameWindow(){
-		super("Triple Town");
+		super("∑√‘ª‡ª‘≈∑“«πÏ");
 		currentScene = null;
 		nextScene = null;
 		this.addListener();
@@ -25,8 +32,8 @@ public class GameWindow extends JFrame{
 		this.setLocation(screen.width / 2 - 320 -3, screen.height / 2 - 240 -26);
 		this.setResizable(false);
 		this.setFocusable(true);
-//		this.setUndecorated(true);
-		this.getContentPane().setPreferredSize(new Dimension(Configuration.screenWidth,Configuration.screenHeight));
+		//this.setUndecorated(true);
+		this.getContentPane().setPreferredSize(new Dimension(DrawingUtility.screenWidth,DrawingUtility.screenHeight));
 
 	}
 	
@@ -41,50 +48,7 @@ public class GameWindow extends JFrame{
 	}
 
 	private void addListener(){
-		
-		this.addWindowListener(new WindowAdapter() {
-			public void windowOpened(WindowEvent e) {
-				System.out.println("Window Opened Event");
-			}
-
-			public void windowClosing(WindowEvent e) {
-				System.out.println("Window Closing Event");
-			}
-
-			public void windowClosed(WindowEvent e) {
-				System.out.println("Window Close Event");
-			}
-
-			public void windowIconified(WindowEvent e) {
-				System.out.println("Window Iconified Event");
-			}
-
-			public void windowDeiconified(WindowEvent e) {
-				System.out.println("Window Deiconified Event");
-			}
-
-			public void windowActivated(WindowEvent e) {
-				System.out.println("Window Activated Event");
-			}
-
-			public void windowDeactivated(WindowEvent e) {
 				
-				System.out.println("Window Deactivated Event");
-			}
-
-			public void windowStateChanged(WindowEvent e) {
-				System.out.println("Window State Changed Event");
-			}
-
-			public void windowGainedFocus(WindowEvent e) {
-				System.out.println("Window Gained Focus Event");
-			}
-
-			public void windowLostFocus(WindowEvent e) {
-				System.out.println("Window Lost Focus Event");
-			}
-		});
-		
 		this.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {

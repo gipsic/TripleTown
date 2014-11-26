@@ -1,4 +1,4 @@
-package logic;
+package utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,15 +18,10 @@ public class HighScoreUtility {
 		private int score = 0;
 		
 		private HighScoreRecord(String name, int score) {
-			//Fill code
 			this.name = name;
 			this.score = score;
 		}
 		
-		/* 
-		 * Parse the given string "record"
-		 * record format is name:score
-		 */
 		public HighScoreRecord(String record) throws ScoreParsingException{
 			if (record == null || record.indexOf(":") == -1)
 				throw new ScoreParsingException(1);
@@ -50,8 +45,8 @@ public class HighScoreUtility {
 			return new String[]{
 					"Krit:47915","Wisit:47850","Proud:42845","Eve:36150","Palm:34885",
 					"Pete:31050","John:28555","George:25480","Michael:22995","Mike:17500",
-					"vKrit:47915","aWisit:47850","vProud:42845","REve:36150","APalm:34885",
-					"sPete:31050","FJohn:28555","aGeorge:25480","UMichael:22995","AMike:17500"
+					"vKrit:15205","aWisit:13865","vProud:10245","REve:9750","APalm:8235",
+					"sPete:6520","FJohn:4355","aGeorge:3480","UMichael:3185","AMike:3010"
 			};
 		}
 
@@ -74,8 +69,9 @@ public class HighScoreUtility {
 		if(!loadHighScore() || highScoreRecord == null){
 			return;
 		}
+		name = name.substring(0, Math.min(8, name.length()));
 		int index = 20;
-		for(int i=0; i<highScoreRecord.length; i++){
+		for(int i=0; i<20; i++){
 			if(score > highScoreRecord[i].score){
 				index = i;
 				break;
@@ -162,7 +158,7 @@ public class HighScoreUtility {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(f));
 			String line;
-			highScoreRecord = new HighScoreRecord[10];
+			highScoreRecord = new HighScoreRecord[20];
 			String str = "";
 			int c;
 			while((c = in.read()) != -1){

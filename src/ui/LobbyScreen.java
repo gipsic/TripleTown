@@ -1,13 +1,15 @@
 package ui;
 
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
-import logic.Configuration;
-import logic.GameManager;
+import javax.swing.JPanel;
+
+import utility.DrawingUtility;
+import utility.InputUtility;
 import logic.MainLogic;
 
 public class LobbyScreen extends JPanel {
@@ -35,7 +37,7 @@ public class LobbyScreen extends JPanel {
 		this.gameLogic = gameLogic;
 		setDoubleBuffered(true);
 		this.setLayout(null);
-		this.setPreferredSize(new Dimension(Configuration.screenWidth, Configuration.screenHeight));
+		this.setPreferredSize(new Dimension(DrawingUtility.screenWidth, DrawingUtility.screenHeight));
 	}
 
 	public void setOverlay(int overlay){
@@ -139,6 +141,7 @@ public class LobbyScreen extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		DrawingUtility.drawLobbyScreen(g2, sky, globe, bear, title, buttonHelp, buttonPlay, buttonScore, buttonSound, BearX, BearY, BearA);
 		if(overlay == 1) {
 			DrawingUtility.drawOverlayHelp(g2, ovlTick, CloseButY);

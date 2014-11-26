@@ -3,13 +3,13 @@ package logic;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import ui.AudioUtility;
-import ui.DrawingUtility;
 import ui.LobbyScreen;
 import ui.GameScreen;
 import ui.GameWindow;
-import ui.InputUtility;
 import ui.SplashScreen;
+import utility.AudioUtility;
+import utility.DrawingUtility;
+import utility.InputUtility;
 
 public class GameManager {
 	private TownMap map = new TownMap();
@@ -53,7 +53,6 @@ public class GameManager {
 
 				if (splashScreen.isFinished()) {
 					game.switchScene(lobbyScreen);
-					lobbyScreen.update();
 					lobbyScreen.repaint();
 					if(init){
 						introSound.start();
@@ -72,7 +71,6 @@ public class GameManager {
 					} else if (mouseX >= 220 && mouseX <= 420 && mouseY >= 330 && mouseY <= 380) {
 						//Click Play
 						game.switchScene(gameScreen);
-						gameScreen.update();
 						gameScreen.repaint();
 					} else if (mouseX >= 25 && mouseX <= 85 && mouseY >= 425 && mouseY <= 455) {
 						//Click Help
@@ -92,8 +90,8 @@ public class GameManager {
 				
 				if(gameScreen.isGameEnd()){
 					gameScreen.setGameEnd(false);
+					gameLogic.reset();
 					game.switchScene(lobbyScreen);
-					lobbyScreen.update();
 					lobbyScreen.repaint();
 				} else if(InputUtility.isMouseLeftClicked() && !gameLogic.getPlayer().isPause()) {
 
