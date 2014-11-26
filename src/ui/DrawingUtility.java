@@ -18,11 +18,17 @@ import logic.TownMap;
 
 public class DrawingUtility {
 	
-	protected static AlphaComposite opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
-	protected static AffineTransform tranform;
-	protected static AffineTransformOp	tranformOp;
+	private static AlphaComposite opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
+	private static AffineTransform tranform;
+	private static AffineTransformOp	tranformOp;
 	
-	protected static BufferedImage Items = DrawingUtility.getImage("res/GameScreen/Items.png");
+	private static BufferedImage Items = DrawingUtility.getImage("res/GameScreen/Items.png");
+	private static BufferedImage ovl = DrawingUtility.getImage("res/GameScreen/Overlay.png");
+	private static BufferedImage closeBut = DrawingUtility.getImage("res/GameScreen/button-close.png");
+	private static BufferedImage yesnoBut = DrawingUtility.getImage("res/GameScreen/yes-no.png");
+	private static BufferedImage HelpSceen = DrawingUtility.getImage("res/GameScreen/help-screen.png");
+	private static BufferedImage BackhomeSceen = DrawingUtility.getImage("res/GameScreen/back-home.png");
+	private static BufferedImage ScoreSceen = DrawingUtility.getImage("res/GameScreen/score-screen.png");
 
 		
 	public static BufferedImage getImage(String directory){
@@ -61,6 +67,56 @@ public class DrawingUtility {
 		g2.drawImage(buttonSound, 580, 420, null);
 		g2.drawImage(buttonScore, 260, 403, null);
 		g2.drawImage(buttonPlay, 215, 325, null);
+	}
+	
+	public static void drawOverlayHelp(Graphics2D g2, int tick, int closeButY){
+		float opacity = 0;
+		if(tick < 50)
+			opacity = tick / 50;
+		else 
+			opacity = 1;
+		
+		g2.drawImage(ovl, 0, 0, null);
+		if(tick >= 10) {
+			g2.drawImage(HelpSceen, 0, 0, null);
+			g2.drawImage(closeBut.getSubimage(0, closeButY, 36, 36), 540, 35, null);
+			
+		}
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN,opacity));
+		
+	}
+	public static void drawOverlayScore(Graphics2D g2, int tick, int closeButY){
+		float opacity = 0;
+		if(tick < 50)
+			opacity = tick / 50;
+		else 
+			opacity = 1;
+		
+		g2.drawImage(ovl, 0, 0, null);
+		if(tick >= 10) {
+			g2.drawImage(ScoreSceen, 0, 0, null);
+			g2.drawImage(closeBut.getSubimage(0, closeButY, 36, 36), 540, 35, null);
+			
+		}
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN,opacity));
+		
+	}
+	public static void drawOverlayBackHome(Graphics2D g2, int tick, int closeButY, int noButY, int yesButY){
+		float opacity = 0;
+		if(tick < 50)
+			opacity = tick / 50;
+		else 
+			opacity = 1;
+		
+		g2.drawImage(ovl, 0, 0, null);
+		if(tick >= 10) {
+			g2.drawImage(BackhomeSceen, 0, 105, null);
+			g2.drawImage(closeBut.getSubimage(0, closeButY, 36, 36), 560, 130, null);
+			g2.drawImage(yesnoBut.getSubimage(0, yesButY, 138, 44), 140, 230, null);
+			g2.drawImage(yesnoBut.getSubimage(138, noButY, 138, 44), 368, 230, null);
+		}
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN,opacity));
+		
 	}
 	
 	public static void drawGameScreen(Graphics2D g2, MainLogic gameLogic, BufferedImage buttonHelp,BufferedImage buttonSound,BufferedImage buttonHome){
@@ -112,11 +168,12 @@ public class DrawingUtility {
 		int Score = gameLogic.getPlayer().getScore();
 		int Rank = HighScoreUtility.calcRank(Score);
 		
-		g2.setFont(new Font("Tahoma",Font.BOLD,36));
+		g2.setFont(new Font("Tahoma",Font.BOLD,32));
 		text = Score+"";
-		padding = (5-text.length())*12;
+		padding = (6-text.length())*10;
 		g2.drawString(text, 470+padding, 55);
 		
+		g2.setFont(new Font("Tahoma",Font.BOLD,36));
 		text = Rank+"";
 		padding = (2-text.length())*12;
 		g2.drawString(text, 573+padding, 157);
@@ -125,9 +182,9 @@ public class DrawingUtility {
 			g2.drawImage(panel, 460, 190, null);
 			g2.drawImage(textBeat, 460, 190, null);
 			g2.setFont(new Font("Tahoma",Font.BOLD,18));
-			text = HighScoreUtility.getScoreOf(Rank-1)-Score+"";
-			padding = (5-text.length())*6;
-			g2.drawString(text, 517+padding, 210);
+			text = HighScoreUtility.getScoreOf(Rank-1)-Score+"0";
+			padding = (6-text.length())*6;
+			g2.drawString(text, 512+padding, 210);
 			text = Rank-1+"";
 			padding = (2-text.length())*6;
 			g2.drawString(text, 592+padding, 231);

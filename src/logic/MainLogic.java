@@ -14,12 +14,6 @@ public class MainLogic implements ICombinable {
 	
 	public MainLogic(){
 		player = new PlayerStatus("");
-		currentMap.clearMap();
-		currentMap.setMapAt(5, 0, 0);
-		currentMap.setMapAt(1, 1, 3);
-		currentMap.setMapAt(9, 3, 5);
-		currentMap.setMapAt(10, 2, 4);
-		currentMap.setMapAt(2, 4, 3);
 	}
 	
 	public PlayerStatus getPlayer() {
