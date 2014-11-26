@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 
 import ui.AudioUtility;
 import ui.DrawingUtility;
-import ui.GameLobby;
+import ui.LobbyScreen;
 import ui.GameScreen;
 import ui.GameWindow;
 import ui.InputUtility;
@@ -23,7 +23,7 @@ public class GameManager {
 		// TODO Auto-generated method stub
 		GameWindow game = new GameWindow();
 		SplashScreen splashScreen = new SplashScreen();
-		GameLobby gameLobby = new GameLobby(gameLogic);
+		LobbyScreen lobbyScreen = new LobbyScreen(gameLogic);
 		GameScreen gameScreen = new GameScreen(gameLogic);
 
 		game.setCurrentScene(splashScreen);
@@ -52,19 +52,19 @@ public class GameManager {
 				splashScreen.repaint();
 
 				if (splashScreen.isFinished()) {
-					game.switchScene(gameLobby);
-					gameLobby.update();
-					gameLobby.repaint();
+					game.switchScene(lobbyScreen);
+					lobbyScreen.update();
+					lobbyScreen.repaint();
 					if(init){
 						introSound.start();
 						init = false;
 					}
 				}
-			} else if (game.getCurrentScene() instanceof GameLobby) {
-				gameLobby.update();
-				gameLobby.repaint();
+			} else if (game.getCurrentScene() instanceof LobbyScreen) {
+				lobbyScreen.update();
+				lobbyScreen.repaint();
 
-				if(InputUtility.isMouseLeftClicked()) {
+				if(InputUtility.isMouseLeftClicked() && !gameLogic.getPlayer().isPause()) {
 					//System.out.println("Clicked "+mouseX+" "+mouseY);
 					if (mouseX >= 585 && mouseX <= 615 && mouseY >= 425 && mouseY <= 455) {
 						//Click Sound Button
@@ -76,31 +76,39 @@ public class GameManager {
 						gameScreen.repaint();
 					} else if (mouseX >= 25 && mouseX <= 85 && mouseY >= 425 && mouseY <= 455) {
 						//Click Help
-
+						gameLogic.getPlayer().setPause(true);
+						lobbyScreen.setOverlay(1);
 
 					} else if (mouseX >= 265 && mouseX <= 375 && mouseY >= 405 && mouseY <= 437) {
 						//Click Rank
-
-
+						gameLogic.getPlayer().setPause(true);
+						lobbyScreen.setOverlay(2);
 					}
 				}
 
 			} else if (game.getCurrentScene() instanceof GameScreen) {
 				gameScreen.update();
 				gameScreen.repaint();
+				
+				if(gameScreen.isGameEnd()){
+					gameScreen.setGameEnd(false);
+					game.switchScene(lobbyScreen);
+					lobbyScreen.update();
+					lobbyScreen.repaint();
+				} else if(InputUtility.isMouseLeftClicked() && !gameLogic.getPlayer().isPause()) {
 
-				if(InputUtility.isMouseLeftClicked() && !gameLogic.getPlayer().isPause()) {
-					if (mouseX >= 585 && mouseX <= 615 && mouseY >= 425 && mouseY <= 455) {
+					if (mouseX >= 580 && mouseX < 620 && mouseY >= 420 && mouseY < 460) {
 						//Click Sound Button
 						gameLogic.getPlayer().setEnableSound(!gameLogic.getPlayer().isEnableSound());
-					} else if (mouseX >= 25 && mouseX <= 85 && mouseY >= 425 && mouseY <= 455) {
+					} else if (mouseX >= 510 && mouseX < 580 && mouseY >= 420 && mouseY < 460) {
 						//Click Help
+						gameLogic.getPlayer().setPause(true);
+						gameScreen.setOverlay(1);
 
-					} else if (mouseX >= 265 && mouseX <= 375 && mouseY >= 405 && mouseY <= 437) {
+					} else if (mouseX >= 470 && mouseX < 510 && mouseY >= 420 && mouseY < 460) {
 						//Click Home
-						game.switchScene(gameLobby);
-						gameLobby.update();
-						gameLobby.repaint();
+						gameLogic.getPlayer().setPause(true);
+						gameScreen.setOverlay(3);
 					}
 				}
 			}

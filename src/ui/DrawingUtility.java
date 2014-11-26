@@ -95,6 +95,18 @@ public class DrawingUtility {
 		g2.drawImage(ovl, 0, 0, null);
 		if(tick >= 10) {
 			g2.drawImage(ScoreSceen, 0, 0, null);
+			g2.setFont(new Font("Tahoma",Font.PLAIN,24));
+			g2.setColor(new Color(132,94,55));
+			String[] record = HighScoreUtility.getTop20();
+			int y = 85;
+			for(int a = 0;a <20;a++){
+				int x = (a%2 == 0)? 70:330;
+				y += (a%2 == 0)? 32:0;
+				if(record[a] == null) continue;
+				String c = record[a];
+				g2.drawString(c.substring(0, c.indexOf("\t")), x, y);
+				g2.drawString(c.substring(c.indexOf("\t")+1), x+140, y);
+			}
 			g2.drawImage(closeBut.getSubimage(0, closeButY, 36, 36), 540, 35, null);
 			
 		}

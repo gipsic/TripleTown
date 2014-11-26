@@ -28,7 +28,6 @@ public class HighScoreUtility {
 		 * record format is name:score
 		 */
 		public HighScoreRecord(String record) throws ScoreParsingException{
-			//Fill code
 			if (record == null || record.indexOf(":") == -1)
 				throw new ScoreParsingException(1);
 			try {
@@ -44,18 +43,20 @@ public class HighScoreUtility {
 		}
 		
 		private String getRecord(){
-			return name.trim()+":"+score;
+			return name.trim()+"\t"+score;
 		}
 		
 		private static String[] defaultRecord(){
-			return new String[]{"Krit:47915","Wisit:47850","Proud:42845",
-					"Eve:36150","Palm:34885","Pete:31050",
-					"John:28555","George:25480","Michael:22995","Mike:17500"};
+			return new String[]{
+					"Krit:47915","Wisit:47850","Proud:42845","Eve:36150","Palm:34885",
+					"Pete:31050","John:28555","George:25480","Michael:22995","Mike:17500",
+					"vKrit:47915","aWisit:47850","vProud:42845","REve:36150","APalm:34885",
+					"sPete:31050","FJohn:28555","aGeorge:25480","UMichael:22995","AMike:17500"
+			};
 		}
 
 		@Override
 		public int compareTo(HighScoreRecord o) {
-			//Fill code
 			if (this.score < o.score)
 				return 1;
 			else if (this.score == o.score)
@@ -69,71 +70,53 @@ public class HighScoreUtility {
 
 	private static String readFileName = "highscore";
 	
-	/*
-	 * Display player's score and record if the player rank is 10 or higher.
-	 */
-	public static void recordHighScore(int score){
+	public static void recordHighScore(int score, String name){
 		if(!loadHighScore() || highScoreRecord == null){
-			//Fill code
-			JOptionPane.showMessageDialog(null,
-					"Error loading highscore record", "Error",
-					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		int index=highScoreRecord.length;
+		int index = 20;
 		for(int i=0; i<highScoreRecord.length; i++){
 			if(score > highScoreRecord[i].score){
 				index = i;
 				break;
 			}
 		}
-		if(index >= highScoreRecord.length){
-			//Fill code
-			JOptionPane.showMessageDialog(null, "Your score is " + score,
-					"Game Over", JOptionPane.INFORMATION_MESSAGE);
-		}else{
-			for(int i=highScoreRecord.length-1; i>=index+1; i--){
+		if(index < 20){
+			for(int i=19; i>=index+1; i--){
 				highScoreRecord[i] = highScoreRecord[i-1];
 			}
-			//Fill code
-			String name = JOptionPane.showInputDialog(null,
-					"Congratulation, you are ranked " + (index + 1)
-							+ "\nPlease enter your name.", "High Score",
-					JOptionPane.INFORMATION_MESSAGE);
 			highScoreRecord[index] = new HighScoreRecord(name, score);
 			
 			try {
-				
-				BufferedWriter out = new BufferedWriter(new FileWriter("highscore"));
-				//Fill code
+				BufferedWriter out = new BufferedWriter(new FileWriter(readFileName));
 				String str = "";
 				for (HighScoreRecord record : highScoreRecord)
 					str += record.name.trim() + ":" + record.score + "\n";
 				str = str.trim();
 				out.write(getXORed(str));
-				//
 				out.close();
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(null, "Error saving high score record", 
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Error saving high score record", "Error", JOptionPane.ERROR_MESSAGE);
 				highScoreRecord = null;
 				return;
 			}
 		}
 	}
 	
-	public static void displayTop10(){
+	public static String[] getTop20(){
 		if(!loadHighScore() || highScoreRecord == null){
 			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
-			return;
+			return null;
 		}
-		String msg = "======= Top 10 players ======="+System.getProperty("line.separator");
+		String[] msg = new String[20];
 		int rank = 1;
 		for(HighScoreRecord record : highScoreRecord){
-			msg += rank+" "+record.getRecord()+System.getProperty("line.separator");
+			if(rank>20) break;
+			msg[rank-1] = (rank < 10)? "  ":"";
+			msg[rank-1] += rank+" "+record.getRecord()+"";
 			rank++;
 		}
-		JOptionPane.showMessageDialog(null, msg.trim(), "Top 10", JOptionPane.INFORMATION_MESSAGE);
+		return msg;
 	}
 	
 	public static int getScoreOf(int i) {
@@ -163,9 +146,8 @@ public class HighScoreUtility {
 	private static boolean loadHighScore(){
 		File f = new File(readFileName);
 		//If no high score, create default
-		if(!f.exists()){
+		if(!f.exists())
 			if(!createDefaultScoreFile()) return false;
-		}
 		//Read high score -- if fail: delete the file, create default one and read it again 
 		if(!readAndParseScoreFile(f)){
 			f.delete();
@@ -223,13 +205,10 @@ public class HighScoreUtility {
 	
 	private static final byte[] key = "RmAAq2b5d8fjgu9dhher".getBytes();
 	
-	//This method does both encryption and decryption 
 	private static String getXORed(String in){
 		byte[] inData = in.getBytes();
-		//Fill code
 		for (int index = 0; index < inData.length; index++)
 			inData[index] ^= key[index % key.length];
-		//
 		return new String(inData);
 	}
 
