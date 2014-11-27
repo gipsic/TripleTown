@@ -43,10 +43,10 @@ public class HighScoreUtility {
 		
 		private static String[] defaultRecord(){
 			return new String[]{
-					"Krit:47915","Wisit:47850","Proud:42845","Eve:36150","Palm:34885",
-					"Pete:31050","John:28555","George:25480","Michael:22995","Mike:17500",
-					"vKrit:15205","aWisit:13865","vProud:10245","REve:9750","APalm:8235",
-					"sPete:6520","FJohn:4355","aGeorge:3480","UMichael:3185","AMike:3010"
+					"Krit:47915","Film:47850","Proud:42845","Kitty1:36150","Kitty2:34885",
+					"Bone:31050","EVE:28555","Ves:25480","Poh:22995","Kin:17500",
+					"Venus:15205","Donut:13865","Bank:10245","First:9750","Zack:8235",
+					"Fah:6520","Fern:4355","Jab:3480","YoYo:3185","Kam:3010"
 			};
 		}
 
@@ -138,6 +138,7 @@ public class HighScoreUtility {
 	
 	public static void assingDefaultRecords(){
 		int a = 0;
+		highScoreRecord = new HighScoreRecord[20];
 		for(String s : HighScoreRecord.defaultRecord()){
 			try {
 				highScoreRecord[a] = new HighScoreRecord(s);
