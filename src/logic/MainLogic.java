@@ -9,11 +9,12 @@ public class MainLogic {
 
 	private PlayerStatus player;
 	private TownMap currentMap = new TownMap();
-	private int[][] mergeList = new int[][]{{-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1}}; 
+	private int[][] mergeList = new int[15][2]; 
 	private int mergeCount = 0;
 	
 	public MainLogic(){
 		player = new PlayerStatus();
+		resetMergeList();
 	}
 	
 	public PlayerStatus getPlayer() {
@@ -22,7 +23,10 @@ public class MainLogic {
 	
 	public void resetMergeList(){
 		mergeCount = 0;
-		mergeList = new int[][]{{-1,-1},{-1,-1},{-1,-1},{-1,-1},{-1,-1}}; 
+		for(int i = 0; i < mergeList.length;i++) {
+			mergeList[i][0] = -1;
+			mergeList[i][1] = -1;
+		}
 	}
 
 	public void setPlayer(PlayerStatus player) {
@@ -140,15 +144,15 @@ public class MainLogic {
 			}
 		}
 		
-		//for(int a =0;a<5;a++)System.out.print("("+mergeList[a][0]+","+mergeList[a][1]+") ");System.out.println();
+		//for(int a =0;a<mergeList.length;a++)System.out.print("("+mergeList[a][0]+","+mergeList[a][1]+") ");System.out.println();
 	}
 	
 	public void pushMergeList(int x, int y){
-		for(int a =0;a<5;a++){
+		for(int a =0;a<mergeList.length;a++){
 			if(mergeList[a][0]==x && mergeList[a][1]==y)
 				return;
 		}
-		if(mergeCount<5){
+		if(mergeCount<mergeList.length){
 			mergeList[mergeCount][0] = x;
 			mergeList[mergeCount][1] = y;
 			mergeCount++;
@@ -159,7 +163,7 @@ public class MainLogic {
 		resetMergeList();
 		checkMerge(x, y, code,0);
 		if(mergeCount >= 3){
-			for(int a =0;a<5;a++){
+			for(int a =0;a<mergeList.length;a++){
 				currentMap.setMapAt(0, 0, mergeList[a][0], mergeList[a][1]);
 			}
 			if(mergeCount>3) code+=7;
