@@ -63,7 +63,7 @@ public class HighScoreUtility {
 	
 	private static HighScoreRecord[] highScoreRecord = null;
 
-	private static String readFileName = "highscore";
+	private static String readFileName = System.getProperty("user.home")+"\\"+"highscore";
 	
 	public static void recordHighScore(int score, String name){
 		if(!loadHighScore() || highScoreRecord == null){
@@ -101,8 +101,7 @@ public class HighScoreUtility {
 	
 	public static String[] getTop20(){
 		if(!loadHighScore() || highScoreRecord == null){
-			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
-			return null;
+			assingDefaultRecords();
 		}
 		String[] msg = new String[20];
 		int rank = 1;
@@ -117,8 +116,7 @@ public class HighScoreUtility {
 	
 	public static int getScoreOf(int i) {
 		if(!loadHighScore() || highScoreRecord == null){
-			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
-			return 0;
+			assingDefaultRecords();
 		}
 		int index = i-1;
 		if(index>=0 && index<=highScoreRecord.length) return highScoreRecord[i-1].score;
@@ -127,8 +125,7 @@ public class HighScoreUtility {
 
 	public static int calcRank(int score) {
 		if(!loadHighScore() || highScoreRecord == null){
-			JOptionPane.showMessageDialog(null,"Error loading highscore record", "Error",JOptionPane.ERROR_MESSAGE);
-			return 0;
+			assingDefaultRecords();
 		}
 		int i=0;
 		for(i=0; i<highScoreRecord.length; i++){
@@ -137,7 +134,20 @@ public class HighScoreUtility {
 			}
 		}
 		return i+1;
-	}	
+	}
+	
+	public static void assingDefaultRecords(){
+		int a = 0;
+		for(String s : HighScoreRecord.defaultRecord()){
+			try {
+				highScoreRecord[a] = new HighScoreRecord(s);
+			} catch (ScoreParsingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(++a > highScoreRecord.length) break;
+		}
+	}
 
 	private static boolean loadHighScore(){
 		File f = new File(readFileName);
@@ -184,7 +194,7 @@ public class HighScoreUtility {
 	
 	private static boolean createDefaultScoreFile(){
 		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter("highscore"));
+			BufferedWriter out = new BufferedWriter(new FileWriter(readFileName));
 			String str = "";
 			for(String s : HighScoreRecord.defaultRecord()){
 				str += s+"\n";
