@@ -107,6 +107,7 @@ public class MainLogic {
 	public void checkMerge(int x, int y, int check, int unCheck){
 		pushMergeList(x,y);
 		if(x<0 || x >5||y<0||y>5) return;
+		if(check>8) check = check %7;
 		//Check Above Cell
 		if(currentMap.getStateAt(x, y+1) != 2 && unCheck!=1){
 			int code = currentMap.getMapAt(x, y+1);
@@ -166,6 +167,7 @@ public class MainLogic {
 			for(int a =0;a<mergeList.length;a++){
 				currentMap.setMapAt(0, 0, mergeList[a][0], mergeList[a][1]);
 			}
+			if(code>8) code = code %7;
 			if(mergeCount>3) code+=7;
 			return code+1;
 		}
