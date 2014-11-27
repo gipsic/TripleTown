@@ -94,24 +94,40 @@ public class MainLogic {
 		pushMergeList(x,y);
 		if(x<0 || x >5||y<0||y>5) return;
 		//Check Above Cell
-		if(currentMap.getMapAt(x, y+1)%7 == check && currentMap.getStateAt(x, y+1) != 2 && unCheck!=1){
-			pushMergeList(x,y+1);
-			checkMerge(x,y+1,check,3); // Don't check below cell (this)
+		if(currentMap.getStateAt(x, y+1) != 2 && unCheck!=1){
+			int code = currentMap.getMapAt(x, y+1);
+			if(code>8) code = code %7;
+			if(code == check){
+				pushMergeList(x,y+1);
+				checkMerge(x,y+1,check,3); // Don't check below cell (this)
+			}
 		}
 		//Check Right Cell
-		if(currentMap.getMapAt(x+1, y)%7 == check && currentMap.getStateAt(x+1, y) != 2 && unCheck!=2){
-			pushMergeList(x+1,y);
-			checkMerge(x+1,y,check,4); // Don't check left cell (this)
+		if(currentMap.getStateAt(x+1, y) != 2 && unCheck!=2){
+			int code = currentMap.getMapAt(x+1, y);
+			if(code>8) code = code %7;
+			if(code == check){
+				pushMergeList(x+1,y);
+				checkMerge(x+1,y,check,4); // Don't check left cell (this)
+			}
 		}
 		//Check Below Cell
-		if(currentMap.getMapAt(x, y-1)%7 == check && currentMap.getStateAt(x, y-1) != 2 && unCheck!=3){
-			pushMergeList(x,y-1);
-			checkMerge(x,y-1,check,1); // Don't check left cell (this)
+		if(currentMap.getStateAt(x, y-1) != 2 && unCheck!=3){
+			int code = currentMap.getMapAt(x, y-1);
+			if(code>8) code = code %7;
+			if(code == check){
+				pushMergeList(x,y-1);
+				checkMerge(x,y-1,check,1); // Don't check left cell (this)
+			}
 		}
 		//Check Left Cell
-		if(currentMap.getMapAt(x-1, y)%7 == check && currentMap.getStateAt(x-1, y) != 2 && unCheck!=4){
-			pushMergeList(x-1,y);
-			checkMerge(x-1,y,check,2); // Don't check right cell (this)
+		if(currentMap.getStateAt(x-1, y) != 2 && unCheck!=4){
+			int code = currentMap.getMapAt(x-1, y);
+			if(code>8) code = code %7;
+			if(code == check){
+				pushMergeList(x-1,y);
+				checkMerge(x-1,y,check,2); // Don't check right cell (this)
+			}
 		}
 		
 		//for(int a =0;a<5;a++)System.out.print("("+mergeList[a][0]+","+mergeList[a][1]+") ");System.out.println();

@@ -42,8 +42,8 @@ public class DrawingUtility {
 		try {
 			//image = ImageIO.read(new File("bin/"+directory));
 			image = ImageIO.read(DrawingUtility.class.getClassLoader().getResource(directory));
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, "Can't load "+directory, "Error loading image file.", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(null, "Can't load "+directory, "Error loading image file."+ex.getMessage(), JOptionPane.ERROR_MESSAGE);
 		}
 		return image;
 	}
@@ -52,11 +52,11 @@ public class DrawingUtility {
 		g2.drawImage(splashBG,0,0,null);
 		opaque = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)(opa/100.0));
 		g2.setComposite(opaque);
-		//tranform.setToRotation(-180, 0);
 		tranform = new AffineTransform();
 		tranform.rotate((double)(rotate/100.0), 250, 65); 
 		tranformOp = new AffineTransformOp(tranform, AffineTransformOp.TYPE_BICUBIC);
 		g2.drawImage(splashTitle, tranformOp, 70,320);
+		//g2.drawImage(splashTitle, 70,320,null);
 	}
 	
 	public static void drawLobbyScreen(Graphics2D g2,BufferedImage sky,BufferedImage globe,

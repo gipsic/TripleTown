@@ -12,14 +12,14 @@ import utility.DrawingUtility;
 
 public class SplashScreen extends JPanel {
 	
-	protected static final BufferedImage splashBG = DrawingUtility.getImage("res/SplashScreen/SplashBG.png");
-	protected static final BufferedImage splashTitle = DrawingUtility.getImage("res/SplashScreen/SplashTitle.png");
-	protected int opa = 0;
-	protected int rotate = 0;
-	protected int count = 0;
-	protected int fadeSpeed = 4;
-	protected boolean rotateCCW = false;
-	protected boolean finished = false;
+	private static final BufferedImage splashBG = DrawingUtility.getImage("res/SplashScreen/SplashBG.png");
+	private static final BufferedImage splashTitle = DrawingUtility.getImage("res/SplashScreen/SplashTitle.png");
+	private int opa = 0;
+	private int rotate = 0;
+	private int count = 0;
+	private int fadeSpeed = 4;
+	private boolean rotateCCW = false;
+	private boolean finished = false;
 	
 	
 	public SplashScreen(){

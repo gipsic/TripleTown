@@ -24,7 +24,7 @@ public class GameWindow extends JFrame{
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	public GameWindow(){
-		super("∑√‘ª‡ª‘≈∑“«πÏ");
+		super("Triple Town");
 		currentScene = null;
 		nextScene = null;
 		this.addListener();
