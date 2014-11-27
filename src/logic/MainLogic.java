@@ -13,7 +13,7 @@ public class MainLogic {
 	private int mergeCount = 0;
 	
 	public MainLogic(){
-		player = new PlayerStatus("");
+		player = new PlayerStatus();
 	}
 	
 	public PlayerStatus getPlayer() {
@@ -43,6 +43,15 @@ public class MainLogic {
 		}
 		if(itemNum!=36) return false;
 		else return true;
+	}
+	
+	public void getMaxLevelOnMap(){
+		for(int x = 0; x < 6 ;x ++){
+			for(int y = 0; y < 6 ;y ++){
+				if(currentMap.getMapAt(x, y) > player.getMaxLevel() && currentMap.getStateAt(x, y) != 2)
+					player.setMaxLevel(currentMap.getMapAt(x, y));
+			}
+		}
 	}
 	
 	public void reset(){
@@ -79,6 +88,7 @@ public class MainLogic {
 					int codeMerge = Merge(cellX, cellY, item);
 					if(codeMerge == -1) break;
 					currentMap.setMapAt(codeMerge, 1, cellX, cellY);
+					getMaxLevelOnMap();
 					player.increaseScore(currentMap.getItemScore(codeMerge));
 					item = codeMerge;
 				}

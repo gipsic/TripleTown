@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,11 +23,13 @@ public class GameWindow extends JFrame{
 	private JPanel nextScene;
 	private JFrame gameWindow;
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	private BufferedImage bear = DrawingUtility.getImage("res/LobbyScreen/Bear.png");
 	
 	public GameWindow(){
 		super("Triple Town");
 		currentScene = null;
 		nextScene = null;
+		this.setIconImage(bear);
 		this.addListener();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocation(screen.width / 2 - 320 -3, screen.height / 2 - 240 -26);
@@ -34,7 +37,6 @@ public class GameWindow extends JFrame{
 		this.setFocusable(true);
 		//this.setUndecorated(true);
 		this.getContentPane().setPreferredSize(new Dimension(DrawingUtility.screenWidth,DrawingUtility.screenHeight));
-
 	}
 	
 	

@@ -12,14 +12,10 @@ public class TownMap{
 
 	private int[][] map;
 	private int[][] mapState = new int[6][6];
-	private int[] itemScore = new int[]{0,5,20,100,500,1500,5000,15000,50000,20,100,500,1500,5000,15000};
+	private int[] itemScore = new int[]{0,5,20,100,500,1500,5000,15000,50000,40,200,1000,3000,10000,30000};
 	private BufferedImage[] Ground = new BufferedImage[47];
 	private String[] GroundLogic = new String[47];
 	
-	public TownMap(int[][] map){
-		this.map = map;
-		loadGround();
-	}
 	public TownMap(){
 		this.map = new int[6][6];
 		clearMap();
@@ -145,10 +141,6 @@ public class TownMap{
 		GroundLogic[46] = "11010101";
 	}
 	
-	public int[][] getMap(){
-		return this.map;
-	}
-	
 	public int getMapAt(int x,int y){
 		if(x<0 || x >5||y<0||y>5) return 0;
 		return this.map[x][y];
@@ -163,36 +155,12 @@ public class TownMap{
 		else return true;
 	}
 
-	public void setMap(int[][] map){
-		this.map = map;
-	}
-
-	public void setMapAt(int item, int x, int y){
-		if(x<0 || x >5||y<0||y>5) return;
-		this.map[x][y] = item;
-	}
-
-	public void setStateAt(int item, int x, int y){
-		if(x<0 || x >5||y<0||y>5) return;
-		this.mapState[x][y] = item;
-	}
-
 	public void setMapAt(int item, int state, int x, int y){
 		if(x<0 || x >5||y<0||y>5) return;
 		this.map[x][y] = item;
 		this.mapState[x][y] = state;
-	}
-	public void printMap(){
-		for(int i=0;i<6;i++){
-			for(int j=0;j<6;j++){
-				if(this.mapState[j][i]!=1)
-					System.out.print(this.map[j][i]+" ");
-				else
-					System.out.print(this.map[j][i]+"'");
-			}
-			System.out.println();
-		}
-	}
+	}	
+	
 	public int getItemScore(int code) {
 		if(code >= 0 && code < itemScore.length) return itemScore[code];
 		else return 0;

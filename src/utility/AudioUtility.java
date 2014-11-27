@@ -17,7 +17,7 @@ public class AudioUtility implements Runnable{
 	
 	static{
 		ClassLoader loader = AudioUtility.class.getClassLoader();
-		intro = Applet.newAudioClip(loader.getResource("res/intro.wav"));
+		intro = Applet.newAudioClip(loader.getResource("res/Intro.wav"));
 	}
 	
 	public AudioUtility(MainLogic gameLogic) {
@@ -55,16 +55,4 @@ public class AudioUtility implements Runnable{
 			}
 		}
 	}
-	
-//	public static void playSound(String identifier){
-//		AudioClip ac;
-//		/* fill code */
-//		if(identifier.equalsIgnoreCase("shoot"))
-//			ac = acShoot;
-//		else
-//			ac = acCollect;
-//		////
-//		ac.play();
-//	}
-	
 }

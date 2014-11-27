@@ -3,6 +3,8 @@ package logic;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.JOptionPane;
+
 import ui.LobbyScreen;
 import ui.GameScreen;
 import ui.GameWindow;
@@ -12,12 +14,6 @@ import utility.DrawingUtility;
 import utility.InputUtility;
 
 public class GameManager {
-	private TownMap map = new TownMap();
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	private static int opa = 0;
-
-	public GameManager() {
-	}
 
 	public static void runGame(MainLogic gameLogic) {
 		// TODO Auto-generated method stub
@@ -25,7 +21,7 @@ public class GameManager {
 		SplashScreen splashScreen = new SplashScreen();
 		LobbyScreen lobbyScreen = new LobbyScreen(gameLogic);
 		GameScreen gameScreen = new GameScreen(gameLogic);
-
+		
 		game.setCurrentScene(splashScreen);
 		game.add(game.getCurrentScene());
 		game.pack();
@@ -35,7 +31,7 @@ public class GameManager {
 		
 		Thread introSound = new Thread(new AudioUtility(gameLogic));
 		boolean init = true;
-
+		
 		while (true) {
 			
 			try {
@@ -43,6 +39,7 @@ public class GameManager {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
 			
 			int mouseX = InputUtility.getMouseX();
 			int mouseY = InputUtility.getMouseY();
